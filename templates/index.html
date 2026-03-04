@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Мир блаженства</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+    <!-- Стартовый экран -->
+    <div id="welcome-screen" class="screen active">
+        <div class="welcome-content">
+            <h1 class="welcome-title">Добро пожаловать<br>в мир блаженства</h1>
+            <button id="start-btn" class="start-button">начать</button>
+        </div>
+    </div>
+
+    <!-- Экран с товарами -->
+    <div id="products-screen" class="screen">
+        <div class="products-grid" id="products-grid"></div>
+    </div>
+
+    <!-- Экран деталей -->
+    <div id="detail-screen" class="screen">
+        <button class="back-button" onclick="showProducts()">← Назад</button>
+        
+        <div class="image-slider">
+            <div class="slider-container" id="slider-container">
+                <!-- Images will be inserted here -->
+            </div>
+            <div class="slider-dots" id="slider-dots"></div>
+        </div>
+
+        <div class="info-block">
+            <div class="info-row">
+                <span class="info-label">название/возраст</span>
+                <span class="info-value" id="detail-name"></span>
+            </div>
+        </div>
+
+        <div class="info-block">
+            <div class="info-row">
+                <span class="info-label">параметры</span>
+                <span class="info-value" id="detail-params"></span>
+            </div>
+        </div>
+
+        <div class="info-block">
+            <div class="info-row">
+                <span class="info-label">стоимость</span>
+                <span class="info-value" id="detail-price"></span>
+            </div>
+        </div>
+
+        <button class="call-button" onclick="makeCall()">ПОЗВОНИТЬ!</button>
+    </div>
+
+    <script src="{{url_for('static', filename='script.js')}}"></script>
+</body>
+</html>
