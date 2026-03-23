@@ -12,6 +12,13 @@ if (tg) {
 let currentProductId = null;
 let products = [];
 let currentSliderInterval = null;
+let currentSlideIndex = 0;
+let totalSlides = 0;
+
+// Переменные для свайпов
+let isDown = false;
+let startX;
+let scrollLeft;
 
 function showScreen(screenId) {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -72,6 +79,15 @@ async function showProductDetail(id) {
         slider.innerHTML = '';
         dotsContainer.innerHTML = '';
         
+        // Очищаем интервал
+        if (currentSliderInterval) {
+            clearInterval(currentSliderInterval);
+            currentSliderInterval = null;
+        }
+        
+        totalSlides = product.images.length;
+        currentSlideIndex = 0;
+        
         // Создаём слайды для ВСЕХ фотографий
         product.images.forEach((img, idx) => {
             const imgElement = document.createElement('img');
@@ -90,15 +106,14 @@ async function showProductDetail(id) {
             dotsContainer.appendChild(dot);
         });
         
-        // Авто-переключение слайдов
-        let slideIdx = 0;
-        if (currentSliderInterval) clearInterval(currentSliderInterval);
+        // Инициализация свайпов
+        initSwipe(slider);
         
-        // Если больше 1 фото — запускаем авто-переключение
+        // Авто-переключение слайдов (только если больше 1 фото)
         if (product.images.length > 1) {
             currentSliderInterval = setInterval(() => {
-                slideIdx = (slideIdx + 1) % product.images.length;
-                goToSlide(slideIdx);
+                currentSlideIndex = (currentSlideIndex + 1) % totalSlides;
+                goToSlide(currentSlideIndex);
             }, 4000);
         }
         
@@ -114,9 +129,74 @@ async function showProductDetail(id) {
     }
 }
 
+// Инициализация свайпов
+function initSwipe(slider) {
+    // Сброс предыдущих обработчиков
+    const newSlider = slider.cloneNode(true);
+    slider.parentNode.replaceChild(newSlider, slider);
+    
+    // Mouse events (для ПК)
+    newSlider.addEventListener('mousedown', (e) => {
+        isDown = true;
+        newSlider.style.cursor = 'grabbing';
+        startX = e.pageX - newSlider.offsetLeft;
+        scrollLeft = parseInt(getComputedStyle(newSlider).transform.split(',')[4]) || 0;
+    });
+    
+    newSlider.addEventListener('mouseleave', () => {
+        isDown = false;
+        newSlider.style.cursor = 'grab';
+    });
+    
+    newSlider.addEventListener('mouseup', () => {
+        isDown = false;
+        newSlider.style.cursor = 'grab';
+    });
+    
+    newSlider.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - newSlider.offsetLeft;
+        const walk = (x - startX) * 2;
+        // Можно добавить визуальный эффект перетаскивания
+    });
+    
+    // Touch events (для мобильных)
+    newSlider.addEventListener('touchstart', (e) => {
+        isDown = true;
+        startX = e.touches[0].pageX - newSlider.offsetLeft;
+        scrollLeft = parseInt(getComputedStyle(newSlider).transform.split(',')[4]) || 0;
+    }, {passive: true});
+    
+    newSlider.addEventListener('touchend', (e) => {
+        if (!isDown) return;
+        isDown = false;
+        
+        const x = e.changedTouches[0].pageX - newSlider.offsetLeft;
+        const diff = x - startX;
+        
+        // Если свайп достаточно сильный
+        if (Math.abs(diff) > 50) {
+            if (diff < 0) {
+                // Свайп влево — следующее фото
+                if (currentSlideIndex < totalSlides - 1) {
+                    goToSlide(currentSlideIndex + 1);
+                }
+            } else {
+                // Свайп вправо — предыдущее фото
+                if (currentSlideIndex > 0) {
+                    goToSlide(currentSlideIndex - 1);
+                }
+            }
+        }
+    }, {passive: true});
+}
+
 function goToSlide(idx) {
     const slider = document.getElementById('slider-container');
     const dots = document.querySelectorAll('.slider-dot');
+    
+    currentSlideIndex = idx;
     
     slider.style.transform = `translateX(-${idx * 100}%)`;
     

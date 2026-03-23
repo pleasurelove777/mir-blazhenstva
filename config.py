@@ -13,8 +13,8 @@ PRODUCTS = [
         "images": [
             "/static/images/Rose_1.jpg",
             "/static/images/Rose_2.jpg",
-            "/static/images/Rose_3.jpg"
-            "/static/images/Rose_4.jpg"
+            "/static/images/Rose_3.jpg",
+            "/static/images/Rose_4.jpg",
             "/static/images/Rose_5.jpg"
         ],
         "description": "Дополнительная информация об Анне..."
