@@ -1,19 +1,21 @@
 # config.py
 # ⚠️ Этот файл можно загружать на GitHub (нет токена бота!)
 
-PHONE_NUMBER = "+79999999999"  # ← твой номер
+PHONE_NUMBER = "+79055674190"  #
 
 PRODUCTS = [
     {
         "id": 1,
-        "name": "Анна",
-        "age": "25 лет",
+        "name": "Роза",
+        "age": "21 лет",
         "parameters": "Рост: 170 см, Вес: 55 кг, 42 размер",
         "price": "5000",
         "images": [
-            "/static/images/anna_1.jpg",
-            "/static/images/anna_2.jpg",
-            "/static/images/anna_3.jpg"
+            "/static/images/Rose_1.jpg",
+            "/static/images/Rose_2.jpg",
+            "/static/images/Rose_3.jpg"
+            "/static/images/Rose_4.jpg"
+            "/static/images/Rose_5.jpg"
         ],
         "description": "Дополнительная информация об Анне..."
     },
@@ -79,4 +81,5 @@ PRODUCTS = [
         ],
         "description": "Дополнительная информация об Александре..."
     }
+
 ]
