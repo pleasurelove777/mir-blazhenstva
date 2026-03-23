@@ -268,25 +268,32 @@ body {
 }
 
 .call-button {
-    width: 100%;
+    width: auto;              /* Авто-ширина по тексту */
+    min-width: 280px;         /* Минимальная ширина */
     background: linear-gradient(135deg, #00d9a5 0%, #00b894 100%);
     color: white;
     border: none;
-    padding: 20px;
+    padding: 18px 40px;
     font-size: 18px;
     font-weight: 700;
     border-radius: 16px;
     cursor: pointer;
-    margin-top: 15px;
+    margin: 20px auto 0;      /* Центрирование (auto по бокам) */
     transition: all 0.3s ease;
     text-transform: uppercase;
     letter-spacing: 1px;
     box-shadow: 0 10px 30px rgba(0, 217, 165, 0.3);
+    display: block;           /* Блочный элемент для центрирования */
+    text-align: center;
 }
 
 .call-button:hover {
     transform: translateY(-2px);
     box-shadow: 0 15px 40px rgba(0, 217, 165, 0.5);
+}
+
+.call-button:active {
+    transform: translateY(0);
 }
 
 /* ========== АДАПТИВ ДЛЯ ПК ========== */
