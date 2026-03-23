@@ -74,12 +74,30 @@ async function showProductDetail(id) {
         document.getElementById('detail-params').textContent = product.parameters;
         document.getElementById('detail-price').textContent = `${product.price} ₽`;
         
+        // 🔥 Добавляем описание
+        const descElement = document.getElementById('detail-description');
+        const descBlock = document.getElementById('description-block');
+        const toggleBtn = document.querySelector('.details-toggle-btn');
+        
+        if (product.description && product.description.trim()) {
+            descElement.textContent = product.description;
+            descBlock.style.display = 'block';
+            toggleBtn.style.display = 'flex';
+        } else {
+            descBlock.style.display = 'none';
+            toggleBtn.style.display = 'none';
+        }
+        
+        // Сбрасываем состояние кнопки
+        descBlock.classList.remove('show');
+        toggleBtn.classList.remove('active');
+        
+        // ... остальной код слайдера (без изменений)
         const slider = document.getElementById('slider-container');
         const dotsContainer = document.getElementById('slider-dots');
         slider.innerHTML = '';
         dotsContainer.innerHTML = '';
         
-        // Очищаем интервал
         if (currentSliderInterval) {
             clearInterval(currentSliderInterval);
             currentSliderInterval = null;
@@ -88,7 +106,6 @@ async function showProductDetail(id) {
         totalSlides = product.images.length;
         currentSlideIndex = 0;
         
-        // Создаём слайды для ВСЕХ фотографий
         product.images.forEach((img, idx) => {
             const imgElement = document.createElement('img');
             imgElement.src = img;
@@ -98,7 +115,6 @@ async function showProductDetail(id) {
             };
             slider.appendChild(imgElement);
             
-            // Создаём точку для каждого слайда
             const dot = document.createElement('div');
             dot.className = 'slider-dot';
             if (idx === 0) dot.classList.add('active');
@@ -106,10 +122,8 @@ async function showProductDetail(id) {
             dotsContainer.appendChild(dot);
         });
         
-        // Инициализация свайпов
         initSwipe(slider);
         
-        // Авто-переключение слайдов (только если больше 1 фото)
         if (product.images.length > 1) {
             currentSliderInterval = setInterval(() => {
                 currentSlideIndex = (currentSlideIndex + 1) % totalSlides;
@@ -211,6 +225,18 @@ function showProducts() {
         currentSliderInterval = null;
     }
     showScreen('products-screen');
+}
+
+function toggleDescription() {
+    const descBlock = document.getElementById('description-block');
+    const toggleBtn = document.querySelector('.details-toggle-btn');
+    
+    descBlock.classList.toggle('show');
+    toggleBtn.classList.toggle('active');
+    
+    if (tg?.HapticFeedback) {
+        tg.HapticFeedback.impactOccurred('light');
+    }
 }
 
 async function makeCall() {
