@@ -15,7 +15,6 @@ let currentSliderInterval = null;
 let currentSlideIndex = 0;
 let totalSlides = 0;
 
-// Переменные для свайпов
 let isDown = false;
 let startX;
 let scrollLeft;
@@ -74,10 +73,10 @@ async function showProductDetail(id) {
         document.getElementById('detail-params').textContent = product.parameters;
         document.getElementById('detail-price').textContent = `${product.price} ₽`;
         
-        // 🔥 Добавляем описание
+        // Описание
         const descElement = document.getElementById('detail-description');
         const descBlock = document.getElementById('description-block');
-        const toggleBtn = document.querySelector('.details-toggle-btn');
+        const toggleBtn = document.getElementById('details-toggle-btn');
         
         if (product.description && product.description.trim()) {
             descElement.textContent = product.description;
@@ -88,11 +87,11 @@ async function showProductDetail(id) {
             toggleBtn.style.display = 'none';
         }
         
-        // Сбрасываем состояние кнопки
+        // Сброс состояния
         descBlock.classList.remove('show');
         toggleBtn.classList.remove('active');
         
-        // ... остальной код слайдера (без изменений)
+        // Слайдер
         const slider = document.getElementById('slider-container');
         const dotsContainer = document.getElementById('slider-dots');
         slider.innerHTML = '';
@@ -143,43 +142,13 @@ async function showProductDetail(id) {
     }
 }
 
-// Инициализация свайпов
 function initSwipe(slider) {
-    // Сброс предыдущих обработчиков
     const newSlider = slider.cloneNode(true);
     slider.parentNode.replaceChild(newSlider, slider);
     
-    // Mouse events (для ПК)
-    newSlider.addEventListener('mousedown', (e) => {
-        isDown = true;
-        newSlider.style.cursor = 'grabbing';
-        startX = e.pageX - newSlider.offsetLeft;
-        scrollLeft = parseInt(getComputedStyle(newSlider).transform.split(',')[4]) || 0;
-    });
-    
-    newSlider.addEventListener('mouseleave', () => {
-        isDown = false;
-        newSlider.style.cursor = 'grab';
-    });
-    
-    newSlider.addEventListener('mouseup', () => {
-        isDown = false;
-        newSlider.style.cursor = 'grab';
-    });
-    
-    newSlider.addEventListener('mousemove', (e) => {
-        if (!isDown) return;
-        e.preventDefault();
-        const x = e.pageX - newSlider.offsetLeft;
-        const walk = (x - startX) * 2;
-        // Можно добавить визуальный эффект перетаскивания
-    });
-    
-    // Touch events (для мобильных)
     newSlider.addEventListener('touchstart', (e) => {
         isDown = true;
         startX = e.touches[0].pageX - newSlider.offsetLeft;
-        scrollLeft = parseInt(getComputedStyle(newSlider).transform.split(',')[4]) || 0;
     }, {passive: true});
     
     newSlider.addEventListener('touchend', (e) => {
@@ -189,15 +158,12 @@ function initSwipe(slider) {
         const x = e.changedTouches[0].pageX - newSlider.offsetLeft;
         const diff = x - startX;
         
-        // Если свайп достаточно сильный
         if (Math.abs(diff) > 50) {
             if (diff < 0) {
-                // Свайп влево — следующее фото
                 if (currentSlideIndex < totalSlides - 1) {
                     goToSlide(currentSlideIndex + 1);
                 }
             } else {
-                // Свайп вправо — предыдущее фото
                 if (currentSlideIndex > 0) {
                     goToSlide(currentSlideIndex - 1);
                 }
@@ -229,7 +195,7 @@ function showProducts() {
 
 function toggleDescription() {
     const descBlock = document.getElementById('description-block');
-    const toggleBtn = document.querySelector('.details-toggle-btn');
+    const toggleBtn = document.getElementById('details-toggle-btn');
     
     descBlock.classList.toggle('show');
     toggleBtn.classList.toggle('active');

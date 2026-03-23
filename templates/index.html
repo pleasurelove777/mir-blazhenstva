@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#1a1a2e">
     <title>Мир блаженства</title>
-    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
@@ -26,9 +27,7 @@
         <button class="back-button" onclick="showProducts()">← Назад</button>
         
         <div class="image-slider">
-            <div class="slider-container" id="slider-container">
-                <!-- Images will be inserted here -->
-            </div>
+            <div class="slider-container" id="slider-container"></div>
             <div class="slider-dots" id="slider-dots"></div>
         </div>
 
@@ -53,53 +52,20 @@
             </div>
         </div>
 
+        <!-- Кнопка "Подробнее" -->
+        <button class="details-toggle-btn" id="details-toggle-btn" onclick="toggleDescription()">
+            📖 Подробнее
+            <span class="toggle-icon">▼</span>
+        </button>
+
+        <!-- Блок с описанием -->
+        <div class="description-block" id="description-block">
+            <p id="detail-description"></p>
+        </div>
+
         <button class="call-button" onclick="makeCall()">ПОЗВОНИТЬ!</button>
     </div>
 
-    <!-- Экран деталей -->
-<div id="detail-screen" class="screen">
-    <button class="back-button" onclick="showProducts()">← Назад</button>
-    
-    <div class="image-slider">
-        <div class="slider-container" id="slider-container"></div>
-        <div class="slider-dots" id="slider-dots"></div>
-    </div>
-
-    <div class="info-block">
-        <div class="info-row">
-            <span class="info-label">название/возраст</span>
-            <span class="info-value" id="detail-name"></span>
-        </div>
-    </div>
-
-    <div class="info-block">
-        <div class="info-row">
-            <span class="info-label">параметры</span>
-            <span class="info-value" id="detail-params"></span>
-        </div>
-    </div>
-
-    <div class="info-block">
-        <div class="info-row">
-            <span class="info-label">стоимость</span>
-            <span class="info-value" id="detail-price"></span>
-        </div>
-    </div>
-
-    <!-- 🔥 Кнопка "Подробнее" -->
-    <button class="details-toggle-btn" onclick="toggleDescription()">
-        📖 Подробнее
-        <span class="toggle-icon">▼</span>
-    </button>
-
-    <!-- 🔥 Блок с описанием (скрыт по умолчанию) -->
-    <div class="description-block" id="description-block">
-        <p id="detail-description"></p>
-    </div>
-
-    <button class="call-button" onclick="makeCall()">ПОЗВОНИТЬ!</button>
-</div>
-
-    <script src="{{url_for('static', filename='script.js')}}"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>

@@ -209,28 +209,6 @@ body {
     word-wrap: break-word;
 }
 
-.call-button {
-    width: 100%;
-    background: linear-gradient(135deg, #00d9a5 0%, #00b894 100%);
-    color: white;
-    border: none;
-    padding: 20px;
-    font-size: 18px;
-    font-weight: 700;
-    border-radius: 16px;
-    cursor: pointer;
-    margin-top: 10px;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    box-shadow: 0 10px 30px rgba(0, 217, 165, 0.3);
-}
-
-.call-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 15px 40px rgba(0, 217, 165, 0.5);
-}
-
 /* ========== КНОПКА "ПОДРОБНЕЕ" ========== */
 .details-toggle-btn {
     width: 100%;
@@ -273,11 +251,12 @@ body {
     margin-top: 10px;
     transition: all 0.4s ease;
     border: 1px solid rgba(255, 255, 255, 0.1);
+    display: none;
 }
 
 .description-block.show {
     padding: 20px;
-    max-height: 500px;
+    max-height: 1000px;
     margin-top: 15px;
 }
 
@@ -285,7 +264,29 @@ body {
     color: rgba(255, 255, 255, 0.9);
     font-size: 15px;
     line-height: 1.7;
-    white-space: pre-line;  /* Сохраняет переносы строк из \n */
+    white-space: pre-line;
+}
+
+.call-button {
+    width: 100%;
+    background: linear-gradient(135deg, #00d9a5 0%, #00b894 100%);
+    color: white;
+    border: none;
+    padding: 20px;
+    font-size: 18px;
+    font-weight: 700;
+    border-radius: 16px;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 10px 30px rgba(0, 217, 165, 0.3);
+}
+
+.call-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 40px rgba(0, 217, 165, 0.5);
 }
 
 /* ========== АДАПТИВ ДЛЯ ПК ========== */
@@ -314,14 +315,25 @@ body {
         font-size: 36px;
     }
     
-    .info-block {
+    .info-block,
+    .details-toggle-btn,
+    .description-block {
         max-width: 600px;
         margin: 0 auto 15px;
+    }
+    
+    .description-block.show {
+        margin: 15px auto 20px;
     }
     
     .image-slider {
         max-width: 600px;
         margin: 0 auto 25px;
+    }
+    
+    .call-button {
+        max-width: 600px;
+        margin: 15px auto 0;
     }
 }
 
